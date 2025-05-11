@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMR</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff; /* Fundo branco */
+            color: #333333; /* Texto escuro para contraste */
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; /* Evita rolagem horizontal */
+            scroll-behavior: smooth; /* Rolagem suave */
+        }
+
+        /* Barra de Navegação */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.9); /* Fundo semi-transparente branco */
+            padding: 15px 20px;
+            z-index: 1000; /* Fica acima de outros elementos */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(5px); /* Efeito de desfoque */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra leve */
+        }
+        .navbar .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #333333; /* Cor escura para o logo */
+            text-decoration: none;
+        }
+        .navbar .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+        .navbar .nav-links a {
+            color: #555555; /* Cor escura para os links */
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .navbar .nav-links a:hover {
+            color: #000000; /* Cor mais escura ao passar o mouse */
+        }
+
+        /* Seção Hero */
+        .hero-section {
+            /* Imagem de fundo removida */
+            background-color: #ffffff; /* Fundo branco */
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            /* Cor do texto será definida em .hero-content */
+        }
+        /* Overlay removido */
+        .hero-section::before {
+           display: none;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            color: #333333; /* Texto escuro para contraste com o fundo branco */
+        }
+        .hero-content h1 {
+            font-size: 4em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-shadow: none; /* Sombra removida ou ajustada para fundo claro se necessário */
+        }
+        .hero-content p {
+            font-size: 1.3em;
+            margin-bottom: 40px;
+            color: #555555; /* Cor do texto um pouco mais clara */
+        }
+        .hero-buttons .btn {
+             margin: 0 10px;
+        }
+
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 25px;
+            background-color: #075e54;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+         .btn-email {
+             background-color: #d44638;
+         }
+         .btn-youtube {
+             background-color: #ff0000;
+         }
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+         .btn:active {
+             transform: translateY(0);
+         }
+        .btn i {
+            margin-right: 10px;
+        }
+
+        /* Estilos para as seções de conteúdo */
+        .section {
+            padding: 80px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+             /* Fundo branco ou cinza claro nas seções de conteúdo */
+        }
+         /* Overlay removido ou ajustado para seções com imagem de fundo */
+         .section::before {
+             display: none; /* Overlay padrão removido */
+         }
+        .section h2 {
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            color: #000000;
+            position: relative;
+            padding-bottom: 10px;
+            z-index: 1;
+        }
+         .section h2::after {
+             content: '';
+             position: absolute;
+             bottom: 0;
+             left: 50%;
+             transform: translateX(-50%);
+             width: 80px;
+             height: 4px;
+             background-color: #075e54;
+             border-radius: 2px;
+         }
+
+        /* Seção Sobre */
+        .about-section {
+            /* Imagem de fundo removida */
+            background-image: none;
+            /* Fundo branco levemente acinzentado */
+            background-color: #f8f8f8;
+            background-size: cover;
+            background-position: center;
+        }
+         /* Overlay removido para a seção Sobre Mim */
+         .about-section::before {
+             display: none;
+         }
+        .about-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 900px;
+            margin: 0 auto;
+            gap: 40px;
+            position: relative;
+            z-index: 1;
+            /* Cor do texto ajustada para ser visível no fundo claro */
+            color: #333333;
+        }
+         .about-content img {
+             width: 200px;
+             height: 200px;
+             border-radius: 50%;
+             object-fit: cover;
+             border: 5px solid #dddddd;
+         }
+         .about-text {
+             text-align: left;
+             line-height: 1.8;
+             /* Cor do texto ajustada para ser visível no fundo claro */
+             color: #555555;
+             font-size: 1.1em;
+         }
+
+
+        /* Seção de Projetos */
+        .projects-section {
+             background-color: #ffffff; /* Fundo branco */
+        }
+         .projects-grid {
+             display: grid;
+             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+             gap: 30px;
+             max-width: 1100px;
+             margin: 0 auto;
+         }
+         .project-item {
+             background-color: #f8f8f8; /* Fundo branco levemente acinzentado para itens */
+             border-radius: 8px;
+             overflow: hidden;
+             text-align: left;
+             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+             transition: transform 0.3s ease, box-shadow 0.3s ease;
+             display: flex;
+             flex-direction: column;
+             position: relative; /* Necessário para o pseudo-elemento e z-index */
+         }
+          .project-item:hover {
+              transform: translateY(-8px);
+              box-shadow: 8px 16px rgba(0, 0, 0, 0.2);
+          }
+          /* Overlay para itens de projeto com imagem de fundo */
+          .project-item::before {
+              content: '';
+              position: absolute;
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              z-index: 0; /* Fica atrás do conteúdo */
+              background: rgba(0, 0, 0, 0.6); /* Overlay escuro */
+              display: none; /* Padrão: overlay desativado */
+          }
+         .project-item .project-info {
+              padding: 20px;
+              flex-grow: 1;
+              display: flex;
+              flex-direction: column;
+              position: relative; /* Fica acima do overlay */
+              z-index: 1;
+              color: #333333; /* Cor padrão do texto */
+         }
+         .project-item img {
+             width: 100%;
+             height: 220px;
+             object-fit: cover;
+         }
+         .project-info h3 {
+             font-size: 1.3em;
+             margin-bottom: 10px;
+             color: #000000;
+         }
+         .project-info p {
+             font-size: 1em;
+             color: #555555;
+             line-height: 1.5;
+             margin-bottom: 20px;
+             flex-grow: 1;
+         }
+         .project-info .btn {
+             align-self: flex-start;
+             padding: 8px 15px;
+             font-size: 0.9em;
+             background-color: #075e54;
+         }
+
+        /* Estilos específicos para o item "Jato de Pista" */
+        .project-item-jato {
+             /* Imagem de fundo voltada para o placeholder */
+             background-image: url('https://placehold.co/400x220/cccccc/333333?text=Jato+para+Pista');
+             background-size: cover;
+             background-position: center;
+             color: #ffffff; /* Texto branco para este item */
+        }
+         /* Ativa o overlay para o item "Jato de Pista" */
+         .project-item-jato::before {
+             display: block;
+         }
+         /* Ajusta a cor do texto dentro do .project-info para ser clara */
+         .project-item-jato .project-info {
+             color: #ffffff;
+         }
+         .project-item-jato .project-info h3 {
+             color: #ffffff; /* Título branco */
+         }
+         .project-item-jato .project-info p {
+             color: #cccccc; /* Texto do parágrafo mais claro */
+         }
+
+        /* Estilos específicos para o item "Carro Conceito F1 Aero" */
+        .project-item-carro {
+             /* Imagem de fundo atualizada com o link do Instagram */
+             background-image: url('https://scontent-gru2-1.cdninstagram.com/v/t51.29350-15/484585523_506009645671079_1917509586636240012_n.heic?stp=dst-jpg_e35_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6IlNUT1JZLmltYWdlX3VybGdlbi4xMDgweDE5MjAuc2RyLmYyOTM1MC5kZWZhdWx0X2imYWdlIn0&_nc_ht=scontent-gru2-1.cdninstagram.com&_nc_cat=111&_nc_oc=Q6cZ2QGjM77lY2DKQ-tpIT7xNb7glfCr2VOGx1nq3LxBs_N8EqdgIOWtt6Tn07rvdY4XyhsJKPtKXwWYvFjQLnJ5K4Gs&_nc_ohc=Bq2bT7JVRPIQ7kNvwEc_rdV&_nc_gid=C-HAmUNNmthsRRGiMSbnzw&edm=AJ_75ucBAAAA&ccb=7-5&ig_cache_key=MzU4OTUyNzg5OTg4ODg4OTYwMA%3D%3D.3-ccb7-5&oh=00_AfEpxGvCNNbN5VVr-xKzwTyREedryn4dzlUpTIJT5i4mKg&oe=6819A5CB&_nc_sid=cc158f');
+             background-size: cover;
+             background-position: center;
+             color: #ffffff; /* Texto branco para este item */
+        }
+         /* Ativa o overlay para o item "Carro Conceito F1 Aero" */
+         .project-item-carro::before {
+             display: block;
+         }
+         /* Ajusta a cor do texto dentro do .project-info para ser clara */
+         .project-item-carro .project-info {
+             color: #ffffff;
+         }
+         .project-item-carro .project-info h3 {
+             color: #ffffff; /* Título branco */
+         }
+         .project-item-carro .project-info p {
+             color: #cccccc; /* Texto do parágrafo mais claro */
+         }
+
+
+        /* Seção de Contato */
+        .contact-section {
+            background-color: #eeeeee; /* Fundo cinza claro para destaque */
+        }
+         .contact-form {
+             max-width: 600px;
+             margin: 0 auto;
+             text-align: left;
+         }
+         .contact-form label {
+             display: block;
+             margin-bottom: 8px;
+             font-weight: 600;
+             color: #333333;
+         }
+         .contact-form input,
+         .contact-form textarea {
+             width: 100%;
+             padding: 12px;
+             margin-bottom: 20px;
+             border: 1px solid #cccccc;
+             border-radius: 5px;
+             background-color: #ffffff;
+             color: #333333;
+             font-size: 1em;
+             outline: none;
+         }
+          .contact-form input::placeholder,
+          .contact-form textarea::placeholder {
+              color: #888888;
+          }
+         .contact-form button {
+             display: inline-block;
+             background-color: #075e54;
+             color: white;
+             padding: 12px 30px;
+             border: none;
+             border-radius: 5px;
+             cursor: pointer;
+             font-size: 1.1em;
+             font-weight: 600;
+             transition: background-color 0.3s ease;
+         }
+          .contact-form button:hover {
+              background-color: #054a41;
+          }
+
+         /* Estilos para o Rodapé */
+         .footer {
+             background-color: #f0f0f0;
+             color: #555555;
+             text-align: center;
+             padding: 30px 20px;
+             font-size: 0.9em;
+         }
+         .footer .social-links {
+             margin-top: 15px;
+             margin-bottom: 15px;
+         }
+         .footer .social-links a {
+             color: #333333;
+             font-size: 1.5em;
+             margin: 0 10px;
+             transition: color 0.3s ease;
+         }
+          .footer .social-links a:hover {
+              color: #000000;
+          }
+
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .navbar .nav-links {
+                gap: 15px;
+            }
+            .hero-content h1 {
+                font-size: 3em;
+            }
+            .hero-content p {
+                font-size: 1.1em;
+            }
+            .section h2 {
+                font-size: 2em;
+            }
+             .about-content {
+                 flex-direction: column;
+             }
+             .about-content img {
+                 width: 150px;
+                 height: 150px;
+             }
+             .projects-grid {
+                 grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+             }
+        }
+
+        @media (max-width: 480px) {
+             .navbar {
+                 flex-direction: column;
+                 gap: 10px;
+             }
+             .navbar .nav-links {
+                 gap: 10px;
+                 flex-wrap: wrap;
+                 justify-content: center;
+             }
+             .hero-content h1 {
+                 font-size: 2.5em;
+             }
+             .hero-content p {
+                 font-size: 1em;
+             }
+             .hero-buttons .btn {
+                 margin: 5px;
+             }
+             .section {
+                 padding: 60px 15px;
+             }
+             .section h2 {
+                 font-size: 1.8em;
+             }
+             .projects-grid {
+                 grid-template-columns: 1fr;
+             }
+        }
+
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="#hero" class="logo">Isaac Mariano</a>
+        <div class="nav-links">
+            <a href="#about">Sobre</a>
+            <a href="#projects">Projetos</a>
+            <a href="#contact">Contato</a>
+        </div>
+    </nav>
+
+    <section id="hero" class="hero-section">
+        <div class="hero-content">
+            <h1>Isaac Mariano Rodrigues</h1>
+            <p>Product Designer | Especialista em Veículos de Alta Performance para Pistas de Competição</p>
+            <div class="button-container hero-buttons">
+                <a href="https://w.app/tyvwbq" class="btn" target="_blank"> Fazer um Orçamento
+                </a>
+                <a href="mailto:acecoevank088@gmail.com" class="btn btn-email">
+                     <i class="fas fa-envelope"></i> Email
+                </a>
+                <a href="https://youtu.be/vpf9mnaI6qY?si=X0Q0C6xqqa3rQoH8" class="btn btn-youtube" target="_blank">
+                    <i class="fab fa-youtube"></i> Assistir agora no YouTube
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="section about-section">
+        <h2>Sobre Mim</h2>
+        <div class="about-content">
+            <img src="https://scontent-gru1-1.xx.fbcdn.net/v/t39.30808-6/481273383_4717741518451543_2023178104453232896_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeESmqlEfp5xz3BuDKlnMIBrfIsIeFDjmQZ8iwh4UOOZBmQfYbcvMzBYab5R0OFb6Wwgvtt5KHxCeIEK1L_qfJ4C&_nc_ohc=pIwQ_7aVst4Q7kNvwEsKJKW&_nc_oc=Admdb8yfSSz-3il-oCh67EeT3ziZpoLc69M6Bg7CAhs1FpyidNYwHF9WDlaRQ3jtYjAvL1yyivv-Qq-YkF7JVG14&_nc_zt=23&_nc_ht=scontent-gru1-1.xx&_nc_gid=kWti6tq3Ay3vwIps0f-_4A&oh=00_AfFXilGf8VCRPQ3vIgsScAwiVIaaBtNQgSPvsU3C_9li0A&oe=68199B94" alt="Foto de Isaac Mariano Rodrigues">
+            <div class="about-text">
+                <p>
+                    Olá! Sou Isaac Mariano Rodrigues, um Product Designer apaixonado por velocidade e inovação. Minha jornada no design é impulsionada pela busca incessante em criar máquinas de alta performance que desafiem os limites da engenharia e da estética.
+                </p>
+                <p>
+                    Com foco em veículos para pistas de competição, dedico-se a projetar carros como os de Fórmula 1 e jatos especializados, combinando formas aerodinâmicas com funcionalidade impecável. Acre dito que o design não é apenas sobre a aparência, mas sobre a experiência e a performance que ele proporciona.
+                </p>
+                <p>
+                    Neste site, você encontrará uma amostra dos meus projetos e um pouco mais sobre a minha visão de design. Sinta-se à vontade para explorar e entrar em contato!
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="section projects-section">
+        <h2>Projetos em Destaque</h2>
+        <div class="projects-grid">
+            <div class="project-item project-item-carro">
+                <div class="project-info">
+                    <h3>Carro Conceito F1 Aero</h3>
+                    <p>Design aerodinâmico inovador para máxima performance em pistas de alta velocidade.</p>
+                     <a href="#" class="btn">Ver Projeto</a> </div>
+            </div>
+            <div class="project-item project-item-jato">
+                <div class="project-info">
+                    <h3>Jato de Pista "Velocidade Extrema"</h3>
+                    <p>Projeto de um veículo a jato otimizado para corridas em circuitos fechados.</p>
+                     <a href="#" class="btn">Ver Projeto</a> </div>
+            </div>
+            <div class="project-item">
+                <img src="https://placehold.co/400x220/cccccc/333333?text=Design+Automotivo" alt="Design Automotivo">
+                <div class="project-info">
+                    <h3>Estudo de Design Automotivo</h3>
+                    <p>Exploração de novas formas e materiais para o futuro do design de carros de corrida.</p>
+                     <a href="#" class="btn">Ver Projeto</a> </div>
+            </div>
+            </div>
+    </section>
+
+    <section id="contact" class="section contact-section">
+        <h2>Entre em Contato</h2>
+        <div class="contact-form">
+            <form id="contactForm">
+                <label for="name">Nome:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="message">Mensagem:</label>
+                <textarea id="message" name="message" rows="6" required></textarea>
+
+                <button type="submit">Enviar Mensagem</button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="social-links">
+             <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <a href="https://scontent-gru2-1.cdninstagram.com/v/t51.29350-15/484585523_506009645671079_1917509586636240012_n.heic?stp=dst-jpg_e35_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6IlNUT1JZLmltYWdlX3VybGdlbi4xMDgweDE5MjAuc2RyLmYyOTM1MC5kZWZhdWx0X2imYWdlIn0&_nc_ht=scontent-gru2-1.cdninstagram.com&_nc_cat=111&_nc_oc=Q6cZ2QGjM77lY2DKQ-tpIT7xNb7glfCr2VOGx1nq3LxBs_N8EqdgIOWtt6Tn07rvdY4XyhsJKPtKXwWYvFjQLnJ5K4Gs&_nc_ohc=Bq2bT7JVRPIQ7kNvwEc_rdV&_nc_gid=C-HAmUNNmthsRRGiMSbnzw&edm=AJ_75ucBAAAA&ccb=7-5&ig_cache_key=MzU4OTUyNzg5OTg4ODg4OTYwMA%3D%3D.3-ccb7-5&oh=00_AfEpxGvCNNbN5VVr-xKzwTyREedryn4dzlUpTIJT5i4mKg&oe=6819A5CB&_nc_sid=cc158f" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://youtu.be/vpf9mnaI6qY?si=X0Q0C6xqqa3rQoH8" class="btn btn-youtube" target="_blank">
+                    <i class="fab fa-youtube"></i>
+                </a>
+        </div>
+        <p>© 2024 Isaac Mariano Rodrigues. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        // JavaScript para rolagem suave da navegação
+        document.querySelectorAll('.nav-links a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 60, // Ajusta para a altura da navbar fixa
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // JavaScript para simular o envio do formulário de contato
+        const contactForm = document.getElementById('contactForm');
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault(); // Impede o envio real do formulário
+
+            // Aqui você pode adicionar código para coletar os dados do formulário
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            console.log("Dados do formulário simulado:");
+            console.log("Nome:", name);
+            console.log("Email:", email);
+            console.log("Mensagem:", message);
+
+            // Exibe uma mensagem de sucesso (simulada)
+           alert("Mensagem enviada com sucesso (simulação)! Obrigado por entrar em contato.");
+
+            // Limpa o formulário (opcional)
+            contactForm.reset();
+        });
+
+    </script>
+
+</body>
+</html>s
